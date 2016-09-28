@@ -6,7 +6,7 @@
 // Множество - реализация через битовые поля
 
 #include "tset.h"
-
+/*
 TSet::TSet(int mp) : BitField(-1)
 {
 }
@@ -85,4 +85,4 @@ istream &operator>>(istream &istr, TSet &s) // ввод
 
 ostream& operator<<(ostream &ostr, const TSet &s) // вывод
 {
-}
+}*/

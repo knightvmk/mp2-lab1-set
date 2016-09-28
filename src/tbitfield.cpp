@@ -12,6 +12,10 @@ TELEM *pMem; // память для представления битового 
 int  MemLen; // к-во эл-тов Мем для представления бит.поля */
 TBitField::TBitField(int len)
 {
+	if (len < 1)
+	{
+		throw(len);
+	}
 	BitLen = len;
 	MemLen = (len + 31) >>5;
 	pMem = new TELEM[MemLen];
@@ -23,6 +27,7 @@ TBitField::TBitField(int len)
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
 {
+	
 	if (MemLen != bf.MemLen)
 	{
 		BitLen = bf.BitLen;
@@ -44,11 +49,19 @@ TBitField::~TBitField()
 
 int TBitField::GetMemIndex(const int n) const // индекс Мем для бита n
 {
+	if (n<0 || n>BitLen)
+	{
+		throw(n);
+	}
 	return n >> 5;
 }
 
 TELEM TBitField::GetMemMask(const int n) const // битовая маска для бита n
 {
+	if (n<0 || n>BitLen)
+	{
+		throw(n);
+	}
 	return 1 << (n & 31);
 }
 
@@ -61,18 +74,32 @@ int TBitField::GetLength(void) const // получить длину (к-во б�
 
 void TBitField::SetBit(const int n) // установить бит
 {
-	if ((n >= 0) && (n < BitLen))
+	if (n<0 || n>=BitLen)
+	{
+		throw(n);
+	}
+	if(pMem[GetMemIndex(n)]==0)
+	{
+		if ((n >= 0) && (n < BitLen))
 		pMem[GetMemIndex(n)] |= GetMemMask(n);
+	}
 }
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
-	if ((n >= 0) && (n < BitLen))
-		pMem[GetMemIndex(n)] &= ~GetMemMask(n);
+	if (n<0 || n>=BitLen)
+	{
+		throw(n);
+	}
+	pMem[GetMemIndex(n)] &= ~GetMemMask(n);
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
+	if (n<0 || n>BitLen)
+	{
+		throw(n);
+	}
 	if ((n >= 0) && (n < BitLen))
 		return pMem[GetMemIndex(n)];
   return 0;
@@ -132,6 +159,7 @@ TBitField TBitField::operator|(const TBitField &bf) // операция "или"
 	for (register int i = 0; i < bf.MemLen; i++)
 		tmp.pMem[i] |= bf.pMem[i];
 	return tmp;
+
 }
 
 TBitField TBitField::operator&(const TBitField &bf) // операция "и"
@@ -158,9 +186,10 @@ TBitField TBitField::operator~(void) // отрицание
 
 istream &operator>>(istream &istr, TBitField &bf) // ввод
 {
-	
+	return istr;
 }
 
 ostream &operator<<(ostream &ostr, const TBitField &bf) // вывод
 {
+	return ostr;
 }
