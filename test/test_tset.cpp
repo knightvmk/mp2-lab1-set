@@ -1,3 +1,4 @@
+
 #include "tset.h"
 
 #include <gtest.h>
@@ -295,3 +296,28 @@ TEST(TSet, check_negation_operator)
 
   EXPECT_EQ(expSet, set1);
 }
+/*MY TEST*/
+
+TEST(TSet, can_correct_todo_many_plus_set_operations_inline)
+{
+	const int size = 3;
+	TSet set1(size), set2(size), set3(size), expset(size);
+	expset.InsElem(1);
+	expset.InsElem(2);
+	expset.InsElem(3);
+	set1.InsElem(3);
+	set2.InsElem(2);
+	set3.InsElem(1);
+	EXPECT_EQ(expset, set1 + set2 + set3);
+}
+
+TEST(TSet, double_delete_can_keep_zero)
+{
+	const int size = 1;
+	TSet set1(size), set2(size);
+	set2.InsElem(1);
+	set2.DelElem(1);
+	set2.DelElem(1);
+	EXPECT_EQ(set1, set2);
+}
+

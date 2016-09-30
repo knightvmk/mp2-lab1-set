@@ -26,8 +26,9 @@ private:
   TELEM GetMemMask (const int n) const; // битовая маска для бита n       (#О3)
 public:
   TBitField(int len);                //                                   (#О1)
-  TBitField(const TBitField &bf);    //                                   (#П1)
-  ~TBitField();                      //                                    (#С)
+  TBitField(const TBitField &bf); 
+  TBitField() {}				
+  ~TBitField();  
 
   // доступ к битам
   int GetLength(void) const;      // получить длину (к-во битов)           (#О)
@@ -43,8 +44,8 @@ public:
   TBitField  operator&(const TBitField &bf); // операция "и"              (#Л2)
   TBitField  operator~(void);                // отрицание                  (#С)
 
-  friend istream &operator>>(istream &istr, TBitField &bf);       //      (#О7)
-  friend ostream &operator<<(ostream &ostr, const TBitField &bf); //      (#П4)
+ friend istream &operator>>(istream &istr, TBitField &bf);       //      (#О7)
+ friend ostream &operator<<(ostream &ostr, const TBitField &bf); //      (#П4)
 };
 // Структура хранения битового поля
 //   бит.поле - набор битов с номерами от 0 до BitLen
